@@ -1,0 +1,14 @@
+body{
+    background: black;
+}
+#canvas1{
+    
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) ;
+    border: 5px solid white;
+}
+img{
+    display: none;
+}
