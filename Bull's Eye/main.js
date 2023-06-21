@@ -13,11 +13,16 @@ window.addEventListener('load', function(){
     const game = new Game(canvas);
     game.init();
     console.log(game);
-    function animate(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        game.render(ctx);
+
+    let lastTime = 0;
+    function animate(timeStamp){
+        const deltaTime  = timeStamp - lastTime ; 
+        lastTime = timeStamp;
+        
+       
+        game.render(ctx,deltaTime);
 
         requestAnimationFrame(animate);
     }
-    animate();
+    animate(0);
 });
