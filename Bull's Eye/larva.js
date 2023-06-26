@@ -1,3 +1,6 @@
+//import {Particle} from './particle.js';
+import {Firefly} from './particle.js';
+import {Spark} from './particle.js';
 export class Larva {
     constructor(game, x, y){
         this.game = game;
@@ -37,12 +40,17 @@ export class Larva {
         if (this.collisionY < this.game.topMargin) {
             this.markedForDeletion = true;
             this.game.removeGameObjects();
-            this.game.safeHatchlings++;
+            if(!this.game.gameOver){
+                this.game.safeHatchlings++;
+            }
+            for(let i = 0 ; i < 3 ; i++){
+                this.game.particles.push(new Firefly(this.game, this.collisionX, this.collisionY, 'yellow'));  
+            }
 
         }
 
         //collision with objects
-        let collisionObjects = [this.game.player, ...this.game.obstacles];
+        let collisionObjects = [this.game.player, ...this.game.obstacles, ...this.game.eggs];
         collisionObjects.forEach( object =>{
             let [collision,distance,sumOfRadii,dx,dy] = this.game.checkCollision(this, object);
             if (collision){
@@ -57,8 +65,13 @@ export class Larva {
             if (this.game.checkCollision(this, enemy)[0]){
                 this.markedForDeletion = true;
                 this.game.removeGameObjects();
-                this.game.lostHatchlings++;
+                if(!this.game.gameOver){
+                    this.game.lostHatchlings++;
+                }
                 //console.log (this.game.lostHatchlings);
+                for(let i = 0 ; i < 15 ; i++){
+                    this.game.particles.push(new Spark(this.game, this.collisionX, this.collisionY, 'red'));  
+                }
             }
         });
     }

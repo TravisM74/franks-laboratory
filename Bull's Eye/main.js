@@ -7,9 +7,9 @@ window.addEventListener('load', function(){
     canvas.width = 1280;
     canvas.height = 720;
     ctx.fillStyle = 'white';
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = 'black';
     ctx.lineWidth = 3;
-    ctx.font = '40px Helvetica';
+    ctx.font = '40px Bangers';
     ctx.textAlign = 'center';
     
     const game = new Game(canvas);
@@ -20,11 +20,10 @@ window.addEventListener('load', function(){
     function animate(timeStamp){
         const deltaTime  = timeStamp - lastTime ; 
         lastTime = timeStamp;
-        
-       
         game.render(ctx,deltaTime);
-
+        
         requestAnimationFrame(animate);
+        
     }
     animate(0);
 });

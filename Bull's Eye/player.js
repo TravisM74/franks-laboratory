@@ -8,7 +8,7 @@ export class Player {
         this.speedY = 0;
         this.dx = 0;
         this.dy = 0;
-        this.speedModifer = 2;
+        this.speedModifer = 3;
         this.image = document.getElementById('bull');
         this.spriteWidth = 255;
         this.spriteHeight = 256;
@@ -17,6 +17,12 @@ export class Player {
         this.spriteX = this.collisionX - (this.spriteWidth * 0.5);
         this.spriteY = this.collisionY - (this.spriteHeight * 0.85);
 
+    }
+    restart(){
+        this.collisionX = this.game.width * 0.5;
+        this.collisionY = this.game.height * 0.5;
+        this.spriteX = this.collisionX - (this.spriteWidth * 0.5);
+        this.spriteY = this.collisionY - (this.spriteHeight * 0.85);
     }
     draw(context){
         context.drawImage(this.image, this.spriteWidth * this.frameX, this.spriteHeight * this.frameY, this.spriteWidth, this.spriteHeight, this.spriteX, this.spriteY, this.spriteWidth, this.spriteHeight);

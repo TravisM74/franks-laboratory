@@ -49,7 +49,7 @@ export class Egg{
 
         //hatching 
        
-        if (this.hatchTimer > this.hatchInterval){
+        if (this.hatchTimer > this.hatchInterval || this.collisionY < this.game.topMargin){
             this.markedForDeletion = true;
             this.game.removeGameObjects();
             //console.log(this.game.eggs);

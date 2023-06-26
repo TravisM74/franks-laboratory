@@ -9,9 +9,9 @@ export class Enemy {
         this.margin = this.collisionRadius * 2;
         this.collisionX = this.game.width + this.spriteWidth;
         this.collisionY = this.game.topMargin +this.safeZone + Math.random() * (this.game.height - (this.game.topMargin + this.margin + this.safeZone));
-        this.image = document.getElementById('toad');
+        this.image = document.getElementById('toads');
         this.frameX = 0;
-        this.frameY = 0;
+        this.frameY = Math.floor(Math.random() * 4);
         this.spriteX = this.collisionX - (this.spriteWidth * 0.5);
         this.spriteY = this.collisionY - (this.spriteHeight * 0.62);
         this.baseSpeed = 0.5;
@@ -22,7 +22,7 @@ export class Enemy {
        return Math.random() * this.speedVariance + this.baseSpeed;
     }
     draw(context){
-        context.drawImage(this.image,this.spriteX, this.spriteY);
+        context.drawImage(this.image,this.frameX * this.spriteWidth, this.frameY * this.spriteHeight,this.spriteWidth, this.spriteHeight,this.spriteX, this.spriteY,this.spriteWidth, this.spriteHeight);
         if(this.game.debug){
             //collision circle visual
             context.beginPath();
@@ -39,9 +39,12 @@ export class Enemy {
         this.spriteX = this.collisionX - (this.spriteWidth * 0.5);
         this.spriteY = this.collisionY - (this.spriteHeight * 0.86);
         if (this.spriteX + this.spriteWidth < 0 ) {
-            this.collisionX = this.game.width + this.spriteWidth ;
-            this.collisionY = this.game.topMargin +this.safeZone + Math.random() * (this.game.height - (this.game.topMargin + this.margin + this.safeZone));
-            this.speedX =this.newSpeed();
+            if(!this.game.gameOver){
+                this.collisionX = this.game.width + this.spriteWidth ;
+                this.collisionY = this.game.topMargin +this.safeZone + Math.random() * (this.game.height - (this.game.topMargin + this.margin + this.safeZone));
+                this.speedX =this.newSpeed();
+                this.frameY = Math.floor(Math.random() * 4);
+            }
         }
         let collisionObjects = [this.game.player, ...this.game.obstacles];
         collisionObjects.forEach( object =>{
