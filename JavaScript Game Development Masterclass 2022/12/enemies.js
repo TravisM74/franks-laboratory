@@ -23,6 +23,9 @@ class Enemy {
         if(this.x + this.sWidth < 0 ) this.markedForDeletion = true;
     }
     draw(context){
+         //debug mode
+         if (this.game.debug) context.strokeRect(this.x, this.y, this.sWidth, this.sHeight);
+        
         context.drawImage(this.image, this.frameX * this.sWidth, 0, this.sWidth, this.sHeight, 
             this.x , this.y , this.sWidth, this.sHeight)
     }
@@ -38,7 +41,7 @@ export class FlyingEnemy extends Enemy{
         this.maxFrame = 4;
         this.x = this.game.width + this.sWidth;
         this.y = Math.floor(Math.random() * (this.game.height * 0.6));
-        this.speedX = 1 + Math.random();
+        this.speedX = .5 + Math.random();
         this.speedY = 0;
         this.angle = 0; 
         this.va = Math.random() * 0.1 + 0.1;
