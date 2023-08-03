@@ -7,6 +7,7 @@ export class Projectile {
         this.height = 3;
         this.speed = 3;
         this.markedForDeletion = false;
+        this.image = document.getElementById('projectile');
 
     }
     update(){
@@ -14,9 +15,12 @@ export class Projectile {
         if (this.x > this.game.width * 0.8) this.markedForDeletion = true;
     }
     draw(context){
-        context.save();
-        context.fillStyle = 'yellow';
-        context.fillRect(this.x, this.y , this.width, this.height);
-        context.restore();
+        if (this.game.debug){
+            context.save();
+            context.fillStyle = 'yellow';
+            context.strokeRect(this.x + this.width, this.y + this.height , this.width, this.height);
+            context.restore();
+        }
+        context.drawImage(this.image, this.x, this.y);
     }
 }

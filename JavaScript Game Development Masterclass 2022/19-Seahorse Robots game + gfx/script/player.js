@@ -14,8 +14,12 @@ export class Player {
         this.frameX= 0;
         this.frameY= 0;
         this.maxFrame = 37;
+        this.powerUp = false;
+        this.powerUpTimer = 0;
+        this.powerUpLimit = 10000;
+
     }
-    update(){
+    update(deltaTime){
         if (this.game.keys.includes('ArrowUp')) {
             this.y -= this.maxSpeed;
         }
@@ -28,11 +32,14 @@ export class Player {
         if (this.game.keys.includes('ArrowLeft')) {
             this.x-= this.maxSpeed;
         }
-        /*
-        if (this.game.keys.includes(' ')){
-            this.game.player.shootTop();
+        // vertical boundries
+        if (this.y > this.game.height - this.height * 0.5){
+            this.y = this.game.height - this.height * 0.5;
         }
-        */
+        if (this.y < 0 ) this.y = 0;
+        //horizontal boundries
+        if (this.x < 0) this.x = 0;
+        if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
         //projectiles
         this.projectiles.forEach( p => p.update());
         this.projectiles = this.projectiles.filter( p => !p.markedForDeletion);
@@ -43,16 +50,41 @@ export class Player {
         }else {
             this.frameX = 0 ;
         }
+        if (this.powerUp){
+            if (this.powerUpTimer > this.powerUpLimit){
+                this.powerUpTimer = 0;
+                this.powerUp = false;
+                this.frameY = 0;
+            } else {
+                this.powerUpTimer += deltaTime;
+                this.frameY = 1;
+                this.game.ammo += 0.1;
+            }
+        }
     }
     draw(context){
         if  (this.game.debug) context.strokeRect(this.x, this.y, this.width, this.height);
+        this.projectiles.forEach(p => p.draw(context));
         context.drawImage(this.image, this.frameX * this.width , this.frameY * this.height, this.width, this.height, this.x , this.y, this.width , this.height);
-        this.projectiles.forEach(p => p.draw(context))
     }
     shootTop(){
         if (this.game.ammo > 0) {
             this.projectiles.push(new Projectile(this.game, this.x + this.width - 20,  this.y + 30))
             this.game.ammo--;
         }
+        if (this.powerUp){
+            this.shootBottom();
+        }
+    }
+    shootBottom(){
+        if (this.game.ammo > 0) {
+            this.projectiles.push(new Projectile(this.game, this.x + this.width - 20,  this.y + 175))
+            //this.game.ammo--;
+        }  
+    }
+    enterPowerUp(){
+        this.powerUpTimer = 0;
+        this.powerUp = true;
+        this.game.ammo = this.game.maxAmmo;
     }
 }
