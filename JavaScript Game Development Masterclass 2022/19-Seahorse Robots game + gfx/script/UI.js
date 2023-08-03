@@ -26,7 +26,7 @@ export class UI {
             let message2;
             if (this.game.score >= this.game.winningScore) {
                 message1 = 'Most Wondrous!';
-                message2 = 'well done' + this.gaame.score;
+                message2 = 'well done ' ;
             } else {
                 message1 = 'Wreaked !';
                 message2 =  'Scored '+ this.game.score+ ', you needed '+ this.game.winningScore + ', Try again !!' ;
