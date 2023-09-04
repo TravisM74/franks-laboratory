@@ -79,7 +79,7 @@ export class Player {
         this.game.obstacles.forEach(obj => {
            
             // [(distance < sumOfRadii),distance,sumOfRadii,dx,dy]  collisions check return values
-            let [collision,distance,sumOfRadii,dx,dy] = this.game.checkCollision(this,obj);  // java script deStructuring
+           r(this,obj);  // java script deStructuring
             if(collision){ //formular for pushing back an object from the center point of an another object
                 const unit_x = dx / distance;
                 const unit_y = dy / distance;
